@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Športové potreby</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(90deg, #7b2cff, #4b00b5);
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    nav {
+      margin-top: 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 14px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px 20px 10px;
+    }
+
+    .hero h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #444;
+    }
+
+    .hero img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 14px;
+      margin-top: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    section {
+      padding: 30px 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #222;
+    }
+
+    .filter-buttons {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .filter-buttons button {
+      margin: 6px;
+      background: #6a1bdb;
+    }
+
+    .filter-buttons button:hover {
+      background: #4b00b5;
+    }
+
+    .produkty {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 22px;
+    }
+
+    .produkt {
+      background: white;
+      width: 290px;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: 0.25s;
+    }
+
+    .produkt:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .produkt img {
+      width: 100%;
+      height: 210px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .produkt h3 {
+      font-size: 20px;
+      margin: 14px 0 10px;
+    }
+
+    .cena {
+      color: green;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    button {
+      background: green;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: darkgreen;
+    }
+
+    #kosik {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    #zoznam-kosika {
+      padding-left: 20px;
+    }
+
+    #zoznam-kosika li {
+      margin-bottom: 8px;
+    }
+
+    .kosik-buttons {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .vymazat {
+      background: crimson;
+    }
+
+    .vymazat:hover {
+      background: darkred;
+    }
+
+    .formular-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    form {
+      display: grid;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .success {
+      margin-top: 15px;
+      padding: 12px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .kontakt-box {
+      text-align: center;
+      background: white;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 8px 0;
+      }
+
+      .produkt {
+        width: 95%;
+      }
+
+      .hero h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ŠPORTOVÉ POTREBY</h1>
+    <nav>
+      <a href="#domov">Domov</a>
+      <a href="#produkty">Produkty</a>
+      <a href="#kosik">Košík</a>
+      <a href="#objednavka">Objednávka</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="domov">
+    <h2>Vitajte v našom obchode</h2>
+    <p>Predávame kvalitné vybavenie pre všetky druhy športu.</p>
+    <img src="https://datastore.penta.cz/produkty/6/3/5/635026/009_Set_pro_sportovni_potreby-635026.jpg" alt="Športové potreby">
+  </section>
+
+  <section id="produkty">
+    <h2>Naše produkty</h2>
+
+    <div class="filter-buttons">
+      <button onclick="filtruj('vsetko')">Všetko</button>
+      <button onclick="filtruj('futbal')">Futbal</button>
+      <button onclick="filtruj('hokej')">Hokej</button>
+      <button onclick="filtruj('tenis')">Tenis</button>
+      <button onclick="filtruj('ostatne')">Ostatné</button>
+    </div>
+
+    <div class="produkty">
+
+      <div class="produkt" data-kategoria="futbal">
+        <img src="https://contents.mediadecathlon.com/p2984808/k$ba66f87b2afc7e8a85720efe55a739de/adidas-real-madrid-futbalova-lopta-25-26-vel-5.jpg" alt="Futbalová lopta">
+        <h3>Futbalová lopta Adidas</h3>
+        <p class="cena">19.99 €</p>
+        <button onclick="pridajDoKosika('Futbalová lopta Adidas', 19.99)">Kúpiť</button>
+      </div>
+
+      <div class="produkt" data-kategoria="ostatne">
+        <img src="https://www.sipkar.cz/fotky46081/fotos/_vyr_2052striker.jpg" alt="Terč na šípky">
+        <h3>Terč na šípky UNICORN</h3>
+        <p class="cena">59.99 €</p>
+        <button onclick="pridajDoKosika('Terč na šípky UNICORN', 59.99)">Kúpiť</button>
+      </div>
+
+      <div class="produkt" data-kategoria="hokej">
+        <img src="https://elbe.sk/wp-content/uploads/2024/10/hokejka_bauer_twitch.jpg" alt="Hokejka Bauer">
+        <h3>Hokejka Bauer Twitch</h3>
+        <p class="cena">53.00 €</p>
+        <button onclick="pridajDoKosika('Hokejka Bauer Twitch', 53)">Kúpiť</button>
+      </div>
+
+      <div class="produkt" data-kategoria="ostatne">
+        <img src="https://th.bing.com/th/id/OIP.bzpk3Tka94SJN1I_p_zHRAHaE6?w=271&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="Boxovací set">
+        <h3>Boxovací set</h3>
+        <p class="cena">80.00 €</p>
+        <button onclick="pridajDoKosika('Boxovací set', 80)">Kúpiť</button>
+      </div>
+
+      <div class="produkt" data-kategoria="tenis">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.kXE4P09jZFlyN71Ny1Ug_QHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tenisová raketa">
+        <h3>Tenisová raketa WILSON</h3>
+        <p class="cena">130.00 €</p>
+        <button onclick="pridajDoKosika('Tenisová raketa WILSON', 130)">Kúpiť</button>
+      </div>
+
+      <div class="produkt" data-kategoria="tenis">
+        <img src="https://penzo.cz/kramky/zbozi/velke/img-1-1387876-0.jpg" alt="Pingpongová raketa">
+        <h3>Pingpongová raketa JOOLA</h3>
+        <p class="cena">45.00 €</p>
+        <button onclick="pridajDoKosika('Pingpongová raketa JOOLA', 45)">Kúpiť</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="kosik">
+    <h2>Nákupný košík</h2>
+    <ul id="zoznam-kosika"></ul>
+    <p><strong>Spolu: <span id="cena-spolu">0.00</span> €</strong></p>
+
+    <div class="kosik-buttons">
+      <button class="vymazat" onclick="vymazKosik()">Vymazať košík</button>
+    </div>
+  </div>
+
+  <section id="objednavka">
+    <h2>Objednávkový formulár</h2>
+    <div class="formular-box">
+      <form id="orderForm">
+        <div>
+          <label for="meno">Meno a priezvisko</label>
+          <input type="text" id="meno" name="meno" required>
+        </div>
+
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+          <label for="telefon">Telefón</label>
+          <input type="tel" id="telefon" name="telefon" required>
+        </div>
+
+        <div>
+          <label for="adresa">Adresa doručenia</label>
+          <textarea id="adresa" name="adresa" required></textarea>
+        </div>
+
+        <div>
+          <label for="doprava">Spôsob dopravy</label>
+          <select id="doprava" name="doprava" required>
+            <option value="">-- Vyber si dopravu --</option>
+            <option value="Kurier">Kuriér</option>
+            <option value="Packeta">Packeta</option>
+            <option value="Osobny odber">Osobný odber</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="poznamka">Poznámka</label>
+          <textarea id="poznamka" name="poznamka" placeholder="Sem môžeš napísať poznámku k objednávke"></textarea>
+        </div>
+
+        <button type="submit">Odoslať objednávku</button>
+      </form>
+
+      <div class="success" id="sprava">
+        Objednávka bola úspešne odoslaná.
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <div class="kontakt-box">
+      <p><strong>Email:</strong> sportshop@gmail.com</p>
+      <p><strong>Telefón:</strong> +421 900 123 456</p>
+      <p><strong>Adresa:</strong> Hlavná 67, Pieštany</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Športové potreby | Všetky práva vyhradené</p>
+  </footer>
+
+  <script>
+    let spolu = 0;
+
+    function pridajDoKosika(nazov, cena) {
+      const zoznam = document.getElementById("zoznam-kosika");
+      const polozka = document.createElement("li");
+      polozka.textContent = nazov + " - " + cena.toFixed(2) + " €";
+      zoznam.appendChild(polozka);
+
+      spolu += cena;
+      document.getElementById("cena-spolu").textContent = spolu.toFixed(2);
+    }
+
+    function vymazKosik() {
+      document.getElementById("zoznam-kosika").innerHTML = "";
+      spolu = 0;
+      document.getElementById("cena-spolu").textContent = "0.00";
+    }
+
+    function filtruj(kategoria) {
+      const produkty = document.querySelectorAll(".produkt");
+
+      produkty.forEach(produkt => {
+        if (kategoria === "vsetko") {
+          produkt.style.display = "block";
+        } else {
+          if (produkt.dataset.kategoria === kategoria) {
+            produkt.style.display = "block";
+          } else {
+            produkt.style.display = "none";
+          }
+        }
+      });
+    }
+
+    document.getElementById("orderForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const meno = document.getElementById("meno").value;
+      const email = document.getElementById("email").value;
+      const telefon = document.getElementById("telefon").value;
+      const adresa = document.getElementById("adresa").value;
+      const doprava = document.getElementById("doprava").value;
+
+      if (spolu === 0) {
+        alert("Najprv pridaj aspoň jeden produkt do košíka.");
+        return;
+      }
+
+      if (meno === "" || email === "" || telefon === "" || adresa === "" || doprava === "") {
+        alert("Prosím, vyplň všetky povinné polia.");
+        return;
+      }
+
+      document.getElementById("sprava").style.display = "block";
+      document.getElementById("orderForm").reset();
+
+      setTimeout(() => {
+        document.getElementById("sprava").style.display = "none";
+      }, 4000);
+
+      vymazKosik();
+    });
+  </script>
+
+</body>
+</html>
